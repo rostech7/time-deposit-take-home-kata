@@ -1,0 +1,84 @@
+openapi: 3.0.3
+info:
+  title: XA Bank Time Deposit API
+  version: 1.0.0
+  description: |
+    Manage XA Bank time deposits.
+
+    Interest rules (monthly, rounded to cents; none during the first 30 days):
+    - **basic**: 1% p.a.
+    - **student**: 3% p.a., no interest after 1 year (from day 366)
+    - **premium**: 5% p.a., starting after 45 days (from day 46)
+servers:
+  - url: /api
+tags:
+  - name: Time deposits
+paths:
+  /time-deposits:
+    get:
+      tags: [Time deposits]
+      operationId: getAllTimeDeposits
+      summary: List all time deposits with their withdrawals
+      responses:
+        '200':
+          description: All time deposits, ordered by id.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TimeDeposit'
+  /time-deposits/balance-updates:
+    post:
+      tags: [Time deposits]
+      operationId: updateAllBalances
+      summary: Apply one month of interest to the balances of all time deposits
+      description: |
+        Each call credits one monthly interest run to every time deposit, so it is intentionally
+        not idempotent (hence POST, modelled as creating a "balance update" run).
+        It is expected to be triggered once per month, e.g. by a scheduler.
+      responses:
+        '204':
+          description: All balances were updated.
+components:
+  schemas:
+    TimeDeposit:
+      type: object
+      additionalProperties: false
+      required: [id, planType, balance, days, withdrawals]
+      properties:
+        id:
+          type: integer
+          example: 1
+        planType:
+          type: string
+          description: Plan identifier; known plans are basic, student and premium.
+          example: basic
+        balance:
+          type: number
+          format: double
+          example: 1234567.00
+        days:
+          type: integer
+          description: Age of the deposit in days.
+          example: 45
+        withdrawals:
+          type: array
+          items:
+            $ref: '#/components/schemas/Withdrawal'
+    Withdrawal:
+      type: object
+      additionalProperties: false
+      required: [id, amount, date]
+      properties:
+        id:
+          type: integer
+          example: 1
+        amount:
+          type: number
+          format: double
+          example: 1000.00
+        date:
+          type: string
+          format: date
+          example: '2026-01-15'
