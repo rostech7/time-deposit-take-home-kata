@@ -76,3 +76,8 @@ premium: new FixedRateInterestPolicy(0.05, [afterGracePeriod, olderThanDays(45)]
 ```
 
 To add a plan, implement `InterestPolicy` and add an entry to that map.
+
+## Known limitations
+
+- Calling `POST /time-deposits/balance-updates` twice adds two months of interest. Call it once a month.
+- The service never increases `days`. Another system is expected to update it.
