@@ -9,8 +9,8 @@ export class UpdateAllBalancesService implements UpdateAllBalances {
   ) {}
 
   public async execute(): Promise<void> {
-    const deposits = await this.timeDeposits.findAll()
-    this.calculator.updateBalance(deposits)
-    await this.timeDeposits.saveBalances(deposits)
+    await this.timeDeposits.updateAllInTransaction((deposits) =>
+      this.calculator.updateBalance(deposits),
+    )
   }
 }

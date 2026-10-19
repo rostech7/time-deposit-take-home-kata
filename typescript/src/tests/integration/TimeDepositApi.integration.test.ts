@@ -70,6 +70,22 @@ describe('Time deposit API (Postgres via Testcontainers)', () => {
     ])
   })
 
+  test('concurrent balance updates are all applied, none is lost', async () => {
+    await pool.query('TRUNCATE withdrawals, "timeDeposits" RESTART IDENTITY CASCADE')
+    await pool.query(
+      `INSERT INTO "timeDeposits" ("planType", days, balance) VALUES ('basic', 45, 1200)`,
+    )
+
+    await Promise.all(
+      Array.from({ length: 10 }, () =>
+        request(app).post('/api/time-deposits/balance-updates').expect(204),
+      ),
+    )
+
+    const { rows } = await pool.query('SELECT balance FROM "timeDeposits"')
+    expect(rows).toEqual([{ balance: '1210.04' }])
+  })
+
   test('exposes no endpoints beyond the contract', async () => {
     await request(app).delete('/api/time-deposits').expect(405)
     await request(app).get('/api/withdrawals').expect(404)

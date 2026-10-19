@@ -11,7 +11,9 @@ class InMemoryTimeDepositRepository implements TimeDepositRepository {
   async findAll() {
     return this.stored.map((d) => new TimeDeposit(d.id, d.planType, d.balance, d.days))
   }
-  async saveBalances(deposits: TimeDeposit[]) {
+  async updateAllInTransaction(change: (deposits: TimeDeposit[]) => void) {
+    const deposits = await this.findAll()
+    change(deposits)
     this.stored = deposits
   }
 }
