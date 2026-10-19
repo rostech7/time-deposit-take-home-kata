@@ -24,6 +24,9 @@ jobs:
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
 
+      # Emulates ARM on the Intel runner, so the image can also be built for Apple Silicon and ARM servers.
+      - uses: docker/setup-qemu-action@v4.4.0
+
       - uses: docker/setup-buildx-action@v4.4.1
 
       - uses: docker/login-action@v4.6.0
@@ -45,6 +48,7 @@ jobs:
       - uses: docker/build-push-action@v7.4.0
         with:
           context: typescript
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

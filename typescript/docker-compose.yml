@@ -33,7 +33,6 @@ services:
     <<: *api
     profiles: [full]
     image: ghcr.io/rostech7/time-deposit-take-home-kata:latest
-    platform: linux/amd64
 
   api-local:
     <<: *api
