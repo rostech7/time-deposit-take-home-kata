@@ -5,7 +5,8 @@ pre-commit:
     lint:
       root: typescript/
       glob: '*.{ts,js,json}'
-      run: npm run -s lint
+      run: npx biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+      stage_fixed: true
     typecheck:
       root: typescript/
       glob: '*.ts'

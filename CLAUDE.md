@@ -34,4 +34,4 @@ These rules are loaded automatically by Claude Code at the start of every sessio
 - Before declaring work done, run `yarn lint`, `yarn typecheck` and `yarn test` (the integration tests need Docker).
 - Atomic commits: one logical change per commit, with an imperative subject line.
 - Record ambiguity in a code comment that states the assumption.
-- Match the existing style (no semicolons, single quotes, width 100), enforced by Biome: run `yarn lint` (`yarn lint:fix` to fix).
+- Code style (no semicolons, single quotes, width 100) is enforced by Biome. A hook in `.claude/settings.json` formats every file you edit, and the pre-commit hook formats staged files, so don't format by hand. Still run `yarn lint` before declaring work done.
