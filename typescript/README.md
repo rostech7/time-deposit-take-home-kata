@@ -16,6 +16,19 @@ SEED_DATABASE=true yarn start
 
 Environment variables: `PORT` (default `3000`), `DATABASE_URL` (default `postgres://postgres:postgres@localhost:5432/time_deposits`), `SEED_DATABASE`.
 
+### Docker
+
+Every successful CI run on `main` publishes an image to GitHub Container Registry:
+
+```sh
+docker compose up -d --wait
+docker run --rm -p 3000:3000 -e SEED_DATABASE=true \
+  -e DATABASE_URL=postgres://postgres:postgres@host.docker.internal:5432/time_deposits \
+  ghcr.io/rostech7/time-deposit-take-home-kata:latest
+```
+
+To build the image locally instead, run `docker build -t time-deposit-api .`.
+
 ## Endpoints
 
 | Method | Path                                 | Result                                                           |
