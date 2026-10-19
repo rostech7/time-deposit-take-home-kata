@@ -1,0 +1,12 @@
+# Git hooks (https://lefthook.dev). Installed automatically by `yarn install` in typescript/.
+pre-commit:
+  parallel: true
+  commands:
+    lint:
+      root: typescript/
+      glob: '*.{ts,js,json}'
+      run: npm run -s lint
+    typecheck:
+      root: typescript/
+      glob: '*.ts'
+      run: npm run -s typecheck

@@ -36,6 +36,7 @@ yarn lint               # Biome lint + format check (lint:fix to fix)
 ```
 
 - **Integration tests:** run against a real Postgres. Responses are validated against the OpenAPI contract.
+- **Pre-commit hook:** `yarn install` sets up a [lefthook](https://lefthook.dev) hook (`../lefthook.yml`) that runs `lint` and `typecheck` before each commit.
 
 ## Architecture
 
