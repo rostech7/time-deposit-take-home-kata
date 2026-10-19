@@ -58,6 +58,7 @@ yarn lint:api           # OpenAPI contract lint (Redocly)
 
 - **Integration tests:** run against a real Postgres. Responses are validated against the OpenAPI contract.
 - **Pre-commit hook:** `yarn install` sets up a [lefthook](https://lefthook.dev) hook (`../lefthook.yml`) that formats and re-stages the staged files with Biome and runs `typecheck` before each commit.
+- **Image scan:** CI scans the Docker image with [Trivy](https://trivy.dev) and fails on fixable critical or high vulnerabilities, so CD never publishes them.
 
 ## Architecture
 

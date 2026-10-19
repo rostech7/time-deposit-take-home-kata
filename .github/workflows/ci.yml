@@ -58,3 +58,20 @@ jobs:
           name: coverage-report
           path: typescript/coverage/
           retention-days: 14
+
+  image-scan:
+    name: Scan Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - name: Build image
+        run: docker build -t time-deposit-api:ci typescript
+
+      # Trivy CLI from its official image, pinned by digest (no third-party action code runs here).
+      # Fails on CRITICAL/HIGH vulnerabilities that have a fix, so CD never publishes them.
+      - name: Scan image with Trivy
+        run: >
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock
+          aquasec/trivy:0.75.0@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa
+          image --severity CRITICAL,HIGH --ignore-unfixed --exit-code 1 time-deposit-api:ci

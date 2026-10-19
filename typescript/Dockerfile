@@ -12,7 +12,10 @@ FROM node:22-alpine
 ENV NODE_ENV=production
 WORKDIR /app
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile --production && yarn cache clean
+# Package managers are not needed at runtime; removing them drops their known vulnerabilities from the image.
+RUN yarn install --frozen-lockfile --production && yarn cache clean \
+  && rm -rf /usr/local/lib/node_modules /usr/local/bin/npm /usr/local/bin/npx \
+     /usr/local/bin/yarn /usr/local/bin/yarnpkg /opt/yarn-*
 COPY --from=build /app/dist ./dist
 USER node
 EXPOSE 3000
