@@ -37,7 +37,7 @@ The API runs on http://localhost:3000. Use `API_PORT` or `POSTGRES_PORT` to chan
 
 **Swagger UI:** open http://localhost:3000/docs
 
-The contract is in [`src/adapters/in/http/openapi.yaml`](src/adapters/in/http/openapi.yaml).
+The contract is in [`src/adapters/in/http/openapi.yaml`](src/adapters/in/http/openapi.yaml). Response types are generated from it with `yarn generate:api`, so `tsc` fails if the code drifts from the contract.
 
 ## Tests
 

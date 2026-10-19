@@ -15,7 +15,8 @@
     "typecheck": "tsc --noEmit",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
-    "build": "tsc -p tsconfig.build.json && node scripts/copy-assets.js"
+    "build": "tsc -p tsconfig.build.json && node scripts/copy-assets.js",
+    "generate:api": "openapi-typescript src/adapters/in/http/openapi.yaml --output src/adapters/in/http/generated/openapi.ts"
   },
   "engines": {
     "node": ">=16.0.0"
@@ -42,6 +43,7 @@
     "jest": "29.0.3",
     "lefthook": "2.1.16",
     "nodemon": "^2.0.20",
+    "openapi-typescript": "6.7.6",
     "supertest": "^7.0.0",
     "testcontainers": "^10.16.0",
     "ts-node": "^10.9.1",
