@@ -31,6 +31,9 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
+      - name: Lint OpenAPI contract
+        run: yarn lint:api
+
       - name: Check generated API types match openapi.yaml
         run: |
           yarn generate:api

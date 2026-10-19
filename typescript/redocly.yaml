@@ -1,0 +1,14 @@
+# OpenAPI contract linting (`yarn lint:api`), https://redocly.com/docs/cli
+telemetry: off
+apis:
+  time-deposits:
+    root: src/adapters/in/http/openapi.yaml
+extends:
+  - recommended
+rules:
+  # The brief defines no authentication.
+  security-defined: off
+  # The brief says handling invalid input or exceptions is not required.
+  operation-4xx-response: off
+  # Take-home exercise; the repository has no license.
+  info-license: off
