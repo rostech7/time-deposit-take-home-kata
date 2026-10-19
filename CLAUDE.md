@@ -19,6 +19,7 @@ These rules are loaded automatically by Claude Code at the start of every sessio
 - `domain/` imports nothing outside `domain/`.
 - `application/` imports only `domain/` and its own `ports/`.
 - `adapters/` implement the ports. Only `compositionRoot.ts` and `index.ts` know about concrete adapters.
+- These layer rules are enforced by `yarn arch` (dependency-cruiser, `typescript/.dependency-cruiser.cjs`). Fix the code, never the rules.
 - New interest rules: implement `InterestPolicy` (Strategy) and map a plan type to it in `defaultInterestPolicies`. Don't add branches to the calculator.
 - Keep the code simple. Don't add defensive code for edge cases the domain won't hit.
 - The OpenAPI contract (`adapters/in/http/openapi.yaml`) is the source of truth. Change it first, run `yarn generate:api` to regenerate the response types (never edit `generated/` by hand), then update the code. Responses are validated against it.
