@@ -1,5 +1,5 @@
 import { defaultInterestPolicies } from '../domain/interest/defaultInterestPolicies'
-import { InterestPolicy } from '../domain/interest/InterestPolicy'
+import type { InterestPolicy } from '../domain/interest/InterestPolicy'
 import { TimeDeposit } from '../domain/TimeDeposit'
 import { TimeDepositCalculator } from '../domain/TimeDepositCalculator'
 
@@ -29,7 +29,9 @@ describe('TimeDepositCalculator extensibility', () => {
     const flatBonus: InterestPolicy = { calculateMonthlyInterest: () => 10.004 }
     const deposits = [deposit('bonus', 1, 100), deposit('basic', 31, 1200)]
 
-    new TimeDepositCalculator({ ...defaultInterestPolicies, bonus: flatBonus }).updateBalance(deposits)
+    new TimeDepositCalculator({ ...defaultInterestPolicies, bonus: flatBonus }).updateBalance(
+      deposits,
+    )
 
     expect(deposits.map((d) => d.balance)).toEqual([110, 1201])
   })

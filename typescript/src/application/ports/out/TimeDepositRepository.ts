@@ -1,4 +1,4 @@
-import { TimeDeposit } from '../../../domain/TimeDeposit'
+import type { TimeDeposit } from '../../../domain/TimeDeposit'
 
 export interface TimeDepositRepository {
   findAll(): Promise<TimeDeposit[]>

@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import { GetAllTimeDeposits } from '../../../application/ports/in/GetAllTimeDeposits'
-import { UpdateAllBalances } from '../../../application/ports/in/UpdateAllBalances'
+import type { GetAllTimeDeposits } from '../../../application/ports/in/GetAllTimeDeposits'
+import type { UpdateAllBalances } from '../../../application/ports/in/UpdateAllBalances'
 
 export interface TimeDepositUseCases {
   getAllTimeDeposits: GetAllTimeDeposits

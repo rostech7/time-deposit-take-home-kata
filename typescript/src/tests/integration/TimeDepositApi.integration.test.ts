@@ -1,5 +1,5 @@
-import { PostgreSqlContainer, StartedPostgreSqlContainer } from '@testcontainers/postgresql'
-import { Express } from 'express'
+import { PostgreSqlContainer, type StartedPostgreSqlContainer } from '@testcontainers/postgresql'
+import type { Express } from 'express'
 import { Pool } from 'pg'
 import request from 'supertest'
 import { migrate } from '../../adapters/out/postgres/migrate'

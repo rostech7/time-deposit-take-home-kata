@@ -1,7 +1,7 @@
-import { Withdrawal } from '../../domain/Withdrawal'
-import { GetAllTimeDeposits, TimeDepositDetails } from '../ports/in/GetAllTimeDeposits'
-import { TimeDepositRepository } from '../ports/out/TimeDepositRepository'
-import { WithdrawalRepository } from '../ports/out/WithdrawalRepository'
+import type { Withdrawal } from '../../domain/Withdrawal'
+import type { GetAllTimeDeposits, TimeDepositDetails } from '../ports/in/GetAllTimeDeposits'
+import type { TimeDepositRepository } from '../ports/out/TimeDepositRepository'
+import type { WithdrawalRepository } from '../ports/out/WithdrawalRepository'
 
 export class GetAllTimeDepositsService implements GetAllTimeDeposits {
   constructor(

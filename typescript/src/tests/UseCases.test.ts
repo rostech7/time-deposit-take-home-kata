@@ -1,10 +1,10 @@
-import { TimeDepositRepository } from '../application/ports/out/TimeDepositRepository'
-import { WithdrawalRepository } from '../application/ports/out/WithdrawalRepository'
+import type { TimeDepositRepository } from '../application/ports/out/TimeDepositRepository'
+import type { WithdrawalRepository } from '../application/ports/out/WithdrawalRepository'
 import { GetAllTimeDepositsService } from '../application/use-cases/GetAllTimeDepositsService'
 import { UpdateAllBalancesService } from '../application/use-cases/UpdateAllBalancesService'
 import { TimeDeposit } from '../domain/TimeDeposit'
 import { TimeDepositCalculator } from '../domain/TimeDepositCalculator'
-import { Withdrawal } from '../domain/Withdrawal'
+import type { Withdrawal } from '../domain/Withdrawal'
 
 class InMemoryTimeDepositRepository implements TimeDepositRepository {
   constructor(public stored: TimeDeposit[]) {}

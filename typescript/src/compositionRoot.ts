@@ -1,4 +1,4 @@
-import { Pool } from 'pg'
+import type { Pool } from 'pg'
 import { createApp } from './adapters/in/http/createApp'
 import { PostgresTimeDepositRepository } from './adapters/out/postgres/PostgresTimeDepositRepository'
 import { PostgresWithdrawalRepository } from './adapters/out/postgres/PostgresWithdrawalRepository'

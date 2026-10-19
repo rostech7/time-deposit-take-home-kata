@@ -1,6 +1,6 @@
-import { TimeDepositCalculator } from '../../domain/TimeDepositCalculator'
-import { UpdateAllBalances } from '../ports/in/UpdateAllBalances'
-import { TimeDepositRepository } from '../ports/out/TimeDepositRepository'
+import type { TimeDepositCalculator } from '../../domain/TimeDepositCalculator'
+import type { UpdateAllBalances } from '../ports/in/UpdateAllBalances'
+import type { TimeDepositRepository } from '../ports/out/TimeDepositRepository'
 
 export class UpdateAllBalancesService implements UpdateAllBalances {
   constructor(

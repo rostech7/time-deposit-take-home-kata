@@ -1,7 +1,7 @@
 import { defaultInterestPolicies } from './interest/defaultInterestPolicies'
-import { InterestPolicies } from './interest/InterestPolicy'
+import type { InterestPolicies } from './interest/InterestPolicy'
 import { roundToCents } from './Money'
-import { TimeDeposit } from './TimeDeposit'
+import type { TimeDeposit } from './TimeDeposit'
 
 export class TimeDepositCalculator {
   constructor(private readonly policies: InterestPolicies = defaultInterestPolicies) {}

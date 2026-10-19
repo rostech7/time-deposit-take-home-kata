@@ -1,6 +1,6 @@
 import { afterGracePeriod, olderThanDays, youngerThanDays } from './EligibilityRule'
 import { FixedRateInterestPolicy } from './FixedRateInterestPolicy'
-import { InterestPolicies } from './InterestPolicy'
+import type { InterestPolicies } from './InterestPolicy'
 
 export const defaultInterestPolicies: InterestPolicies = {
   basic: new FixedRateInterestPolicy(0.01, [afterGracePeriod]),

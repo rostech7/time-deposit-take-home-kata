@@ -1,6 +1,6 @@
-import { readdir, readFile } from 'fs/promises'
-import path from 'path'
-import { Pool } from 'pg'
+import { readdir, readFile } from 'node:fs/promises'
+import path from 'node:path'
+import type { Pool } from 'pg'
 
 const MIGRATIONS_DIR = path.join(__dirname, 'migrations')
 

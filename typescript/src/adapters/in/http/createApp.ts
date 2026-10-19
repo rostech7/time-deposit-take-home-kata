@@ -1,10 +1,10 @@
-import express, { ErrorRequestHandler } from 'express'
+import { readFileSync } from 'node:fs'
+import path from 'node:path'
+import express, { type ErrorRequestHandler } from 'express'
 import * as OpenApiValidator from 'express-openapi-validator'
-import { readFileSync } from 'fs'
-import path from 'path'
 import swaggerUi from 'swagger-ui-express'
 import { parse } from 'yaml'
-import { timeDepositRoutes, TimeDepositUseCases } from './timeDepositRoutes'
+import { type TimeDepositUseCases, timeDepositRoutes } from './timeDepositRoutes'
 
 const OPENAPI_SPEC_PATH = path.join(__dirname, 'openapi.yaml')
 

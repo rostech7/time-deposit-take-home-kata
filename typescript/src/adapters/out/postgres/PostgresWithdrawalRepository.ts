@@ -1,6 +1,6 @@
-import { Pool } from 'pg'
-import { WithdrawalRepository } from '../../../application/ports/out/WithdrawalRepository'
-import { Withdrawal } from '../../../domain/Withdrawal'
+import type { Pool } from 'pg'
+import type { WithdrawalRepository } from '../../../application/ports/out/WithdrawalRepository'
+import type { Withdrawal } from '../../../domain/Withdrawal'
 
 interface WithdrawalRow {
   id: number

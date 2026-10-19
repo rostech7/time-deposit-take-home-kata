@@ -1,4 +1,4 @@
-import { Withdrawal } from '../../../domain/Withdrawal'
+import type { Withdrawal } from '../../../domain/Withdrawal'
 
 export interface TimeDepositDetails {
   id: number

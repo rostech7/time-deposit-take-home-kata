@@ -1,6 +1,6 @@
-import { TimeDeposit } from '../TimeDeposit'
-import { EligibilityRule } from './EligibilityRule'
-import { InterestPolicy } from './InterestPolicy'
+import type { TimeDeposit } from '../TimeDeposit'
+import type { EligibilityRule } from './EligibilityRule'
+import type { InterestPolicy } from './InterestPolicy'
 
 const MONTHS_PER_YEAR = 12
 

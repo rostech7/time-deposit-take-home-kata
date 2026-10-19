@@ -1,4 +1,4 @@
-import { TimeDeposit } from '../TimeDeposit'
+import type { TimeDeposit } from '../TimeDeposit'
 
 export type EligibilityRule = (deposit: TimeDeposit) => boolean
 

@@ -1,5 +1,5 @@
-import { Pool } from 'pg'
-import { TimeDepositRepository } from '../../../application/ports/out/TimeDepositRepository'
+import type { Pool } from 'pg'
+import type { TimeDepositRepository } from '../../../application/ports/out/TimeDepositRepository'
 import { TimeDeposit } from '../../../domain/TimeDeposit'
 
 interface TimeDepositRow {
