@@ -1,46 +1,58 @@
-# To run the code
+# XA Bank Time Deposit API (TypeScript)
 
-## Installation
+Express, PostgreSQL, OpenAPI/Swagger, hexagonal architecture, Testcontainers.
 
-### Install nvm (optional)
+## Run
 
-```sh
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-```
-
-Running the above command downloads a script and runs it. The script clones the nvm repository to `~/.nvm`, and attempts to add the source lines from the snippet below to the correct profile file (`~/.bash_profile`, `~/.zshrc`, `~/.profile`, or `~/.bashrc`).
+Requires Node >= 16 and Docker.
 
 ```sh
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+yarn install
+docker compose up -d --wait
+SEED_DATABASE=true yarn start
 ```
 
-This is optional you can choose to directly install node directly (node >= 16.0.0)
+Environment variables: `PORT` (default `3000`), `DATABASE_URL` (default `postgres://postgres:postgres@localhost:5432/time_deposits`), `SEED_DATABASE`.
 
-### Install node using nvm
+## Endpoints
 
-`nvm install 16.16.0`
+| Method | Path                                 | Result                                                           |
+| ------ | ------------------------------------ | ---------------------------------------------------------------- |
+| `GET`  | `/api/time-deposits`                 | All deposits: `id`, `planType`, `balance`, `days`, `withdrawals` |
+| `POST` | `/api/time-deposits/balance-updates` | Applies one month of interest to all deposits (`204`)            |
 
-### Install yarn (optional)
+**Swagger UI:** open http://localhost:3000/docs
 
-`npm install --global yarn`
+The contract is in [`src/adapters/in/http/openapi.yaml`](src/adapters/in/http/openapi.yaml).
 
-This is optional, you can choose to use `npm` itself.
+## Tests
 
-### Install node dependencies
+```sh
+yarn test:unit          # no Docker needed
+yarn test:integration   # needs Docker
+yarn test               # all
+yarn typecheck
+```
 
-`yarn install` or `npm install`
+- **Integration tests:** run against a real Postgres. Responses are validated against the OpenAPI contract.
 
-## Run the server
+## Architecture
 
-### Dev server while watching
+```
+src/
+  domain/             TimeDeposit, TimeDepositCalculator, interest policies
+  application/        ports (in/out) and use cases
+  adapters/in/http    Express routes, OpenAPI, Swagger UI
+  adapters/out/postgres  repositories, SQL migrations, seed data
+  compositionRoot.ts  wiring
+```
 
-`yarn dev`
+Interest rules use the Strategy pattern. Each plan type maps to an `InterestPolicy` in `src/domain/interest/defaultInterestPolicies.ts`:
 
-### Test suite while watching
+```ts
+basic: new FixedRateInterestPolicy(0.01, [afterGracePeriod]),
+student: new FixedRateInterestPolicy(0.03, [afterGracePeriod, youngerThanDays(366)]),
+premium: new FixedRateInterestPolicy(0.05, [afterGracePeriod, olderThanDays(45)]),
+```
 
-`yarn test`
-
-### Run server
-
-`yarn start`
+To add a plan, implement `InterestPolicy` and add an entry to that map.
