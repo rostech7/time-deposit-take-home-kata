@@ -18,16 +18,15 @@ Environment variables: `PORT` (default `3000`), `DATABASE_URL` (default `postgre
 
 ### Docker
 
-Every successful CI run on `main` publishes an image to GitHub Container Registry:
+Every successful CI run on `main` publishes an image to GitHub Container Registry. To run the published image together with PostgreSQL and demo data, without installing Node:
 
 ```sh
-docker compose up -d --wait
-docker run --rm -p 3000:3000 -e SEED_DATABASE=true \
-  -e DATABASE_URL=postgres://postgres:postgres@host.docker.internal:5432/time_deposits \
-  ghcr.io/rostech7/time-deposit-take-home-kata:latest
+docker compose --profile full up -d --wait            # published image from GHCR
+docker compose --profile local up -d --wait --build   # image built from your working copy
+docker compose --profile full --profile local down -v # stop and remove data
 ```
 
-To build the image locally instead, run `docker build -t time-deposit-api .`.
+The API runs on http://localhost:3000. Use `API_PORT` or `POSTGRES_PORT` to change the host ports.
 
 ## Endpoints
 

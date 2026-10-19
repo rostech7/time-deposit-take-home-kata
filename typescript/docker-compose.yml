@@ -1,3 +1,19 @@
+# How to run:
+#   docker compose up -d --wait                          PostgreSQL only (then `yarn start` on your machine)
+#   docker compose --profile full up -d --wait           PostgreSQL + API image published to GHCR
+#   docker compose --profile local up -d --wait --build  PostgreSQL + API built from this working copy
+# Stop and remove data: docker compose --profile full --profile local down -v
+
+x-api: &api
+  environment:
+    DATABASE_URL: postgres://postgres:postgres@postgres:5432/time_deposits
+    SEED_DATABASE: 'true'
+  ports:
+    - '${API_PORT:-3000}:3000'
+  depends_on:
+    postgres:
+      condition: service_healthy
+
 services:
   postgres:
     image: postgres:16-alpine
@@ -12,3 +28,14 @@ services:
       interval: 2s
       timeout: 3s
       retries: 15
+
+  api:
+    <<: *api
+    profiles: [full]
+    image: ghcr.io/rostech7/time-deposit-take-home-kata:latest
+    platform: linux/amd64
+
+  api-local:
+    <<: *api
+    profiles: [local]
+    build: .
