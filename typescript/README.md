@@ -49,6 +49,7 @@ The contract is in [`src/adapters/in/http/openapi.yaml`](src/adapters/in/http/op
 yarn test:unit          # no Docker needed
 yarn test:integration   # needs Docker
 yarn test               # all
+yarn test:coverage      # all + coverage report in coverage
 yarn typecheck
 yarn lint               # Biome lint + format check (lint:fix to fix)
 yarn arch               # hexagonal layer rules (dependency-cruiser)

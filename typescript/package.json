@@ -18,7 +18,8 @@
     "build": "tsc -p tsconfig.build.json && node scripts/copy-assets.js",
     "generate:api": "openapi-typescript src/adapters/in/http/openapi.yaml --output src/adapters/in/http/generated/openapi.ts",
     "arch": "depcruise src --config .dependency-cruiser.cjs",
-    "lint:api": "redocly lint"
+    "lint:api": "redocly lint",
+    "test:coverage": "jest --coverage"
   },
   "engines": {
     "node": ">=16.0.0"
@@ -57,5 +58,40 @@
   "resolutions": {
     "@types/express": "4.17.21",
     "@types/express-serve-static-core": "^4.19.6"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "!src/tests/**",
+      "!src/**/generated/**",
+      "!src/index.ts",
+      "!src/config.ts",
+      "!src/TimeDeposit.ts",
+      "!src/TimeDepositCalculator.ts"
+    ],
+    "coverageReporters": [
+      "text",
+      "html"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 85,
+        "branches": 50,
+        "functions": 85,
+        "lines": 85
+      },
+      "./src/domain/": {
+        "statements": 100,
+        "branches": 100,
+        "functions": 100,
+        "lines": 100
+      },
+      "./src/application/": {
+        "statements": 100,
+        "branches": 100,
+        "functions": 100,
+        "lines": 100
+      }
+    }
   }
 }

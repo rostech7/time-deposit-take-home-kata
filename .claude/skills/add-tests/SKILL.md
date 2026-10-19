@@ -9,4 +9,4 @@ description: Add unit or integration tests to the TypeScript time deposit API. U
    - SQL, routes, contract → `typescript/src/tests/integration/*.integration.test.ts` (Testcontainers + supertest)
 2. Use literal expected values with exact equality. Test both sides of every day boundary.
 3. Never change expected values in `TimeDepositCalculator.test.ts`.
-4. Run `yarn typecheck && yarn test` from `typescript/` (needs Docker).
+4. Run `yarn typecheck && yarn test:coverage` from `typescript/` (needs Docker). `domain/` and `application/`
