@@ -35,7 +35,11 @@ The API runs on http://localhost:3000. Use `API_PORT` or `POSTGRES_PORT` to chan
 | `GET`  | `/api/time-deposits`                 | All deposits: `id`, `planType`, `balance`, `days`, `withdrawals` |
 | `POST` | `/api/time-deposits/balance-updates` | Applies one month of interest to all deposits (`204`)            |
 
-**Swagger UI:** open http://localhost:3000/docs
+**Swagger UI:** open http://localhost:3000/docs, then for each endpoint click **Try it out** → **Execute**:
+
+1. `GET /time-deposits` shows the current balances.
+2. `POST /time-deposits/balance-updates` returns `204`.
+3. `GET /time-deposits` again shows the balances after one month of interest.
 
 The contract is in [`src/adapters/in/http/openapi.yaml`](src/adapters/in/http/openapi.yaml). Response types are generated from it with `yarn generate:api`, so `tsc` fails if the code drifts from the contract.
 
