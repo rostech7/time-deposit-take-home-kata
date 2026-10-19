@@ -1,0 +1,43 @@
+# Weekly dependency update PRs; CI runs on each one before it can be merged.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /typescript
+    schedule:
+      interval: weekly
+    # Only propose releases that are at least two weeks old.
+    cooldown:
+      default-days: 14
+    ignore:
+      # TypeScript and Node stay at their current versions by project decision.
+      - dependency-name: typescript
+      - dependency-name: '@types/node'
+      # Majors here (openapi-typescript, dependency-cruiser, Redocly, Express types...)
+      # need a newer TypeScript or Node, so they are upgraded deliberately, not automatically.
+      - dependency-name: '*'
+        update-types: [version-update:semver-major]
+    groups:
+      # One PR for all minor and patch updates instead of one per package.
+      npm-minor-and-patch:
+        update-types: [minor, patch]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 14
+    groups:
+      github-actions:
+        patterns: ['*']
+
+  - package-ecosystem: docker
+    directory: /typescript
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 14
+    ignore:
+      # Node major versions are chosen deliberately.
+      - dependency-name: node
+        update-types: [version-update:semver-major]
