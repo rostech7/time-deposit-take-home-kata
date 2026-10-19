@@ -32,6 +32,7 @@ yarn test:unit          # no Docker needed
 yarn test:integration   # needs Docker
 yarn test               # all
 yarn typecheck
+yarn lint               # Biome lint + format check (lint:fix to fix)
 ```
 
 - **Integration tests:** run against a real Postgres. Responses are validated against the OpenAPI contract.
