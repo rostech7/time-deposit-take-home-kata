@@ -10,10 +10,19 @@ async function main() {
     await seed(pool)
   }
 
-  buildApp(pool).listen(config.port, () => {
+  const server = buildApp(pool).listen(config.port, () => {
     console.log(`Time deposit API listening on http://localhost:${config.port}/api`)
     console.log(`Swagger UI: http://localhost:${config.port}/docs`)
   })
+
+  const shutdown = (signal: string) => {
+    console.log(`${signal} received, shutting down`)
+    server.close(() => {
+      pool.end().then(() => process.exit(0))
+    })
+  }
+  process.once('SIGTERM', shutdown)
+  process.once('SIGINT', shutdown)
 }
 
 main().catch((error) => {
