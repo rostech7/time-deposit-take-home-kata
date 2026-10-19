@@ -1,5 +1,7 @@
 # XA Bank Time Deposit API (TypeScript)
 
+[![CI](https://github.com/rostech7/time-deposit-take-home-kata/actions/workflows/ci.yml/badge.svg)](https://github.com/rostech7/time-deposit-take-home-kata/actions/workflows/ci.yml)
+
 Express, PostgreSQL, OpenAPI/Swagger, hexagonal architecture, Testcontainers.
 
 ## Run
