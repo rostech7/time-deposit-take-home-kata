@@ -5,6 +5,7 @@ import type {
 } from '../../../application/ports/in/GetAllTimeDeposits'
 import type { UpdateAllBalances } from '../../../application/ports/in/UpdateAllBalances'
 import type { components } from './generated/openapi'
+import { handle } from './handle'
 
 type TimeDepositResponse = components['schemas']['TimeDeposit']
 
@@ -16,23 +17,20 @@ export interface TimeDepositUseCases {
 export function timeDepositRoutes({ getAllTimeDeposits, updateAllBalances }: TimeDepositUseCases) {
   const router = Router()
 
-  router.get<never, TimeDepositResponse[]>('/time-deposits', async (_req, res, next) => {
-    try {
-      const deposits = await getAllTimeDeposits.execute()
-      res.json(deposits.map(toResponse))
-    } catch (error) {
-      next(error)
-    }
-  })
+  router.get(
+    '/time-deposits',
+    handle<TimeDepositResponse[]>(async () => ({
+      body: (await getAllTimeDeposits.execute()).map(toResponse),
+    })),
+  )
 
-  router.post('/time-deposits/balance-updates', async (_req, res, next) => {
-    try {
+  router.post(
+    '/time-deposits/balance-updates',
+    handle(async () => {
       await updateAllBalances.execute()
-      res.status(204).end()
-    } catch (error) {
-      next(error)
-    }
-  })
+      return { status: 204 }
+    }),
+  )
 
   return router
 }
