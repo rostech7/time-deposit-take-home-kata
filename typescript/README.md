@@ -14,7 +14,7 @@ docker compose up -d --wait
 SEED_DATABASE=true yarn start
 ```
 
-Environment variables: `PORT` (default `3000`), `DATABASE_URL` (default `postgres://postgres:postgres@localhost:5432/time_deposits`), `SEED_DATABASE`.
+Environment variables: `PORT` (default `3000`), `DATABASE_URL` (default `postgres://postgres:postgres@localhost:5432/time_deposits`), `SEED_DATABASE`, `LOG_LEVEL` (default `info`; logs are JSON lines, pipe through `npx pino-pretty` to read them locally).
 
 ### Docker
 
