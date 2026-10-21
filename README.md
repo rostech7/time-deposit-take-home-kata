@@ -1,6 +1,15 @@
 # Time Deposit Refactoring Kata - Take-Home Assignment
 
-> **Solution:** implemented in TypeScript, in [`typescript/`](typescript/README.md).
+> **Solution:** implemented in TypeScript, in [`typescript/`](typescript/README.md) (setup, Swagger steps, architecture).
+>
+> **What to look at:**
+> - **Behaviour kept exactly:** characterization tests written before the refactor ([`TimeDepositCalculator.test.ts`](typescript/src/tests/TimeDepositCalculator.test.ts)).
+> - **Extensible interest rules:** one Strategy per plan, mapped in [`defaultInterestPolicies.ts`](typescript/src/domain/interest/defaultInterestPolicies.ts).
+> - **Hexagonal architecture:** dependencies point inward, `adapters/` (HTTP, Postgres) → `application/` (ports, use cases) → `domain/`, enforced in CI by `yarn arch`.
+> - **Contract-first API:** [`openapi.yaml`](typescript/src/adapters/in/http/openapi.yaml) is linted, generates the response types, and validates every response.
+> - **Correctness under load:** balance updates run in one transaction with row locks, tested with 10 concurrent requests.
+> - **Delivery:** CI (lint, types, architecture, contract, tests with coverage, Trivy image scan) and CD to a multi-arch image on GHCR.
+> - **AI setup:** [`AI_USAGE.md`](AI_USAGE.md), [`CLAUDE.md`](CLAUDE.md), skills and hooks in [`.claude/`](.claude).
 
 ## XA Bank Time Deposit
 

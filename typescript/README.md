@@ -81,6 +81,10 @@ premium: new FixedRateInterestPolicy(0.05, [afterGracePeriod, olderThanDays(45)]
 
 To add a plan, implement `InterestPolicy` and add an entry to that map.
 
+## Design decisions
+
+- **Money is a JavaScript `number` in the code, `NUMERIC(15, 2)` in the database.** The brief requires `updateBalance` to behave exactly as before, and the original calculates with floating-point numbers and rounds interest to cents. Switching to a decimal type would change results in edge cases, so the original arithmetic is kept and the database stores exact cents.
+
 ## Known limitations
 
 - Calling `POST /time-deposits/balance-updates` twice adds two months of interest. Call it once a month.
