@@ -1,6 +1,7 @@
 import type { Pool } from 'pg'
 import type { TimeDepositRepository } from '../../../application/ports/out/TimeDepositRepository'
 import { TimeDeposit } from '../../../domain/TimeDeposit'
+import { withTransaction } from './withTransaction'
 
 interface TimeDepositRow {
   id: number
@@ -24,9 +25,7 @@ export class PostgresTimeDepositRepository implements TimeDepositRepository {
 
   // FOR UPDATE locks the rows until COMMIT, so concurrent runs queue up instead of overwriting each other.
   public async updateAllInTransaction(change: (deposits: TimeDeposit[]) => void): Promise<void> {
-    const client = await this.pool.connect()
-    try {
-      await client.query('BEGIN')
+    await withTransaction(this.pool, async (client) => {
       const { rows } = await client.query<TimeDepositRow>(`${SELECT_ALL} FOR UPDATE`)
       const deposits = rows.map(toDomain)
       change(deposits)
@@ -37,12 +36,6 @@ export class PostgresTimeDepositRepository implements TimeDepositRepository {
           WHERE t.id = u.id`,
         [deposits.map((d) => d.id), deposits.map((d) => d.balance)],
       )
-      await client.query('COMMIT')
-    } catch (error) {
-      await client.query('ROLLBACK')
-      throw error
-    } finally {
-      client.release()
-    }
+    })
   }
 }
