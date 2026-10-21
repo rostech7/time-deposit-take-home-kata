@@ -1,7 +1,7 @@
 import type { TimeDeposit } from '../TimeDeposit'
 
 /**
- * Strategy for computing one month of interest. Which plan type uses which policy is
+ * Strategy for computing one month of interest
  */
 export interface InterestPolicy {
   calculateMonthlyInterest(deposit: TimeDeposit): number
